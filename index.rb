@@ -1,10 +1,16 @@
-require './entities/Pessoa'
 require './services/PessoaService'
-require './database/DatabaseConfig'
+require './entities/Pessoa'
 
-puts 'Hello World!'
-DatabaseConfig.new
-Pessoa.new('firstname', 'last_name', 'CURITIBA', 'PR')
-pes = PessoaService.new
+pes_service = PessoaService.new
 
-pes.lista
+pes_service.insere('firs_name', 'last_name', 'address', 'city')
+pes_service.lista
+
+puts "\n\n\n\n"
+
+# pes_service.insere('TESTESTES', 'last_name', 'address', 'city')
+pes_service.lista
+pes_service.exclui('first_name', 'firs_name')
+
+puts "\n\n\n\n\n\n\n\n\n\n\n\n"
+pes_service.lista
