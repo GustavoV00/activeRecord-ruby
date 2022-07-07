@@ -1,71 +1,117 @@
-# require './entities/User'
-# require './services/UserService'
+require './entities/User'
+require './entities/Movie'
+require './entities/Tag'
+require './entities/Rating'
 
-# user_service = UserService.new
+require './services/UserService'
+require './services/MovieService'
+require './services/TagService'
+require './services/RatingService'
 
-# user_service.insere('firs_name', 'last_name', 'email')
-# user_service.lista
+def lista(table)
+  if table == 'users'
+    user_service = UserService.new
+    user_service.lista
+  end
 
-# puts "\n\n\n\n"
+  if table == 'tags'
+    tag_service = TagService.new
+    tag_service.lista
+  end
 
-# # user_service.insere('TESTESTES', 'last_name', 'emailAleatorio')
-# # user_service.lista
-# user_service.exclui('email', 'email')
-# user_service.insere('TESTESTES', 'last_name', 'emailAleatorio')
+  if table == 'movies'
+    movie_service = MovieService.new
+    movie_service.lista
+  end
 
-# puts "\n\n\n\n\n\n\n\n\n\n\n\n"
-# user_service.lista
+  if table == 'rating'
+    rating_service = RatingService.new
+    rating_service.lista
+  end
+end
 
-# require './entities/Movie'
-# require './services/MovieService'
+def parse_inserir(arg1, arg2, arg3)
+  # puts arg1, arg2, arg3
 
-# movie_service = MovieService.new
+  _arg1 = arg1.split('"') if arg1
 
-# movie_service.insere('movie', 'description')
-# movie_service.lista
+  _arg2 = arg2.split('"') if arg2
 
-# puts "\n\n\n\n"
+  _arg3 = arg3.split('"') if arg3
 
-# movie_service.insere('TESTESTES', 'description')
-# movie_service.lista
-# movie_service.exclui('name', 'TESTESTES')
-# # user_service.insere('TESTESTES', 'last_name', 'emailAleatorio')
 
-# puts "\n\n\n\n\n\n\n\n\n\n\n\n"
-# movie_service.lista
+  [_arg1[1], _arg2[1], _arg3[1]]
+end
 
-# require './entities/Tag'
-# require './services/TagService'
+def parse_excluir(arg)
 
-# tag_service = TagService.new
+  if arg
+    _arg = arg.split('"')
 
-# tag_service.insere('acao')
-# tag_service.lista
+    _arg[0].delete! "="
 
-# puts "\n\n\n\n"
+    [_arg[0], _arg[1]]
+  end
 
-# tag_service.insere('aventura')
-# tag_service.lista
-# tag_service.exclui('tag', 'acao')
-# # user_service.insere('TESTESTES', 'last_name', 'emailAleatorio')
+end
 
-# puts "\n\n\n\n\n\n\n\n\n\n\n\n"
-# tag_service.lista
+def insere(table, arg1, arg2, arg3)
+  puts 'ESTOU INSERINDO ALGUM CARAIO AQUI'
 
-# require './entities/Rating'
-# require './services/RatingService'
+  if table == 'users'
+    args = parse_inserir(arg1, arg2, arg3)
+    user_service = UserService.new
+    user_service.insere(args[0], args[1], args[2])
+  end
 
-# rating_service = RatingService.new
+  if table == 'tags'
+    args = parse_inserir(arg1, false, false)
+    tag_service = TagService.new
+    tag_service.insere(args[0])
+  end
 
-# rating_service.insere('2,4')
-# rating_service.lista
+  if table == 'movies'
+    args = parse_inserir(arg1, arg2, false)
+    movie_service = MovieService.new
+    movie_service.insere(args[0], args[1])
+  end
 
-# puts "\n\n\n\n"
+  if table == 'rating'
+    args = parse_inserir(arg1, false, false)
+    rating_service = RatingService.new
+    rating_service.insere(args[0])
+  end
+end
 
-# rating_service.insere('3.5')
-# rating_service.lista
-# rating_service.exclui('rating', '2,4')
-# # # user_service.insere('TESTESTES', 'last_name', 'emailAleatorio')
+def exclui(table, args)
 
-# puts "\n\n\n\n\n\n\n\n\n\n\n\n"
-# rating_service.lista
+  case table
+  when "users"
+    service = UserService.new
+  when "tags"
+    service = TagService.new
+  when "movies"
+    service = MovieService.new
+  when "rating"
+    service = RatingService.new
+  end
+
+  args = parse_excluir(args)
+  service.exclui(args[0], args[1])
+end
+
+# def test(_op1, _table, _arg1, _arg2, _arg3)
+while true
+  command_input = gets.chomp.split(' ') # gsub(/\s+/m, ' ').strip.split(' ')
+  puts command_input.length
+
+  lista(command_input[1]) if command_input.length == 2 && command_input[0] == 'lista'
+
+  if command_input.length == 5 && (command_input[0] == 'insere')
+    insere(command_input[1], command_input[2], command_input[3], command_input[4])
+  end
+
+  if command_input.length == 3 && (command_input[0] == 'exclui')
+    exclui(command_input[1], command_input[2])
+  end
+end
