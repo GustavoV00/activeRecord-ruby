@@ -22,9 +22,10 @@ class DatabaseConfig
   def movies_table
     moviesExists = ActiveRecord::Base.connection.data_source_exists? 'movies'
     unless moviesExists
-      ActiveRecord::Base.connection.create_table :movies do |u|
-        u.string      :name, limit: 50
-        u.string      :description, limit: 500
+      ActiveRecord::Base.connection.create_table :movies do |m|
+        m.string      :name, limit: 50
+        m.string      :description, limit: 500
+        m.references  :users, foreign_key: true
       end
     end
   end

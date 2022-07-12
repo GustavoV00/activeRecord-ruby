@@ -1,5 +1,6 @@
 require './database/DatabaseConfig'
 require './entities/User'
+require './entities/Movie'
 
 class UserRepository
   def initialize
@@ -7,13 +8,14 @@ class UserRepository
     db.users_table
   end
 
-  def insere(first_name, last_name, email)
+  def insere(first_name, last_name, email, id)
     user = User.new({
                       first_name: first_name,
                       last_name: last_name,
-                      email: email
+                      email: email,
                     })
 
+    movie.id = id
     user.save
   end
 
