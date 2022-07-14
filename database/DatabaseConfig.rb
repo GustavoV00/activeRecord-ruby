@@ -1,5 +1,6 @@
 require 'active_record'
 
+# Database configuration
 class DatabaseConfig
   def initialize
     ActiveRecord::Base.establish_connection(
@@ -9,8 +10,9 @@ class DatabaseConfig
   end
 
   def users_table
-    usersExists = ActiveRecord::Base.connection.data_source_exists? 'users'
-    unless usersExists
+    user_exists = ActiveRecord::Base.connection.data_source_exists? 'users'
+
+    unless user_exists
       ActiveRecord::Base.connection.create_table :users do |u|
         u.string      :first_name,    limit: 30
         u.string      :last_name,     limit: 30
@@ -20,8 +22,8 @@ class DatabaseConfig
   end
 
   def movies_table
-    moviesExists = ActiveRecord::Base.connection.data_source_exists? 'movies'
-    unless moviesExists
+    movie_exists = ActiveRecord::Base.connection.data_source_exists? 'movies'
+    unless movie_exists
       ActiveRecord::Base.connection.create_table :movies do |m|
         m.string      :name, limit: 50
         m.string      :description, limit: 500
@@ -31,8 +33,8 @@ class DatabaseConfig
   end
 
   def tags_table
-    tagsExists = ActiveRecord::Base.connection.data_source_exists? 'tags'
-    unless tagsExists
+    tags_exists = ActiveRecord::Base.connection.data_source_exists? 'tags'
+    unless tags_exists
       ActiveRecord::Base.connection.create_table :tags do |t|
         t.string      :tag, limit: 50
       end
@@ -40,8 +42,8 @@ class DatabaseConfig
   end
 
   def ratings_table
-    ratingsExists = ActiveRecord::Base.connection.data_source_exists? 'ratings'
-    unless ratingsExists
+    rating_exists = ActiveRecord::Base.connection.data_source_exists? 'ratings'
+    unless rating_exists
       ActiveRecord::Base.connection.create_table :ratings do |r|
         r.string      :rating, limit: 50
       end

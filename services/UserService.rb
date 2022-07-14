@@ -5,8 +5,8 @@ class UserService
     @user_repository = UserRepository.new
   end
 
-  def insere(first_name, last_name, email, movie)
-    @user_repository.insere(first_name, last_name, email, movie)
+  def insere(first_name, last_name, email)
+    @user_repository.insere(first_name, last_name, email)
   end
 
   def lista

@@ -8,120 +8,116 @@ require './services/MovieService'
 require './services/TagService'
 require './services/RatingService'
 
-def lista(table)
-  if table == 'users'
-    user_service = UserService.new
-    user_service.lista
-  end
-
-  if table == 'tags'
-    tag_service = TagService.new
-    tag_service.lista
-  end
-
-  if table == 'movies'
-    movie_service = MovieService.new
-    movie_service.lista
-  end
-
-  if table == 'rating'
-    rating_service = RatingService.new
-    rating_service.lista
-  end
+def lista(_table)
+  service.lista
 end
 
 def parse_inserir(arg1, arg2, arg3)
   # puts arg1, arg2, arg3
 
-  _arg1 = arg1.split('"') if arg1
-  _arg2 = arg2.split('"') if arg2
-  _arg3 = arg3.split('"') if arg3
+  aux1 = arg1.split('"') if arg1
+  aux2 = arg2.split('"') if arg2
+  aux3 = arg3.split('"') if arg3
 
-  [_arg1[1], _arg2[1], _arg3[1]]
+  [aux1[1], aux2[1], aux3[1]]
 end
 
 def parse_excluir(arg)
-
   if arg
     _arg = arg.split('"')
-    _arg[0].delete! "="
+    _arg[0].delete! '='
 
     [_arg[0], _arg[1]]
   end
-
 end
 
-def insere(table, arg1, arg2, arg3, arg4)
+def insere(table, service, args)
   puts 'ESTOU INSERINDO ALGUM CARAIO AQUI'
 
-  if table == 'users'
-    args = parse_inserir(arg1, arg2, arg3)
-    user_service = UserService.new
-    if(arg4 == false)
-      randomId = geraIdAleatorio()
-      user_service.insere(args[0], args[1], args[2], randomId)
-    else
-      user_service.insere(args[0], args[1], args[2], arg4)
-    end
-  end
+  case table
+  when 'users'
+    args = parse_inserir(args[2], arg[3], arg[4])
+    service.insere(args[0], args[1], args[2])
+  when 'tags'
+    args = parse_inserir(args[2], false, false)
+    service.insere(args[0])
+  when 'movies'
+    args = parse_inserir(args[2], args[3], false)
+    service.insere(args[0], args[1])
 
-  if table == 'tags'
-    args = parse_inserir(arg1, false, false)
-    tag_service = TagService.new
-    tag_service.insere(args[0])
-  end
-
-  if table == 'movies'
-    args = parse_inserir(arg1, arg2, false)
-    movie_service = MovieService.new
-    movie_service.insere(args[0], args[1])
-  end
-
-  if table == 'rating'
-    args = parse_inserir(arg1, false, false)
-    rating_service = RatingService.new
-    rating_service.insere(args[0])
+  when 'rating'
+    args = parse_inserir(args[2], false, false)
+    service.insere(args[0])
   end
 end
 
 def exclui(table, args)
   case table
-    when "users"
-      service = UserService.new
+  when 'users'
+    service = UserService.new
 
-    when "tags"
-      service = TagService.new
+  when 'tags'
+    service = TagService.new
 
-    when "movies"
-      service = MovieService.new
+  when 'movies'
+    service = MovieService.new
 
-    when "rating"
-      service = RatingService.new
-    end
+  when 'rating'
+    service = RatingService.new
+  end
 
   args = parse_excluir(args)
   service.exclui(args[0], args[1])
 end
 
-def main
-  while true
-    command_input = gets.chomp.split(' ')
-    puts command_input.length
-  
-    lista(command_input[1]) if command_input.length == 2 && command_input[0] == 'lista'
-  
-    if command_input.length == 5 && (command_input[0] == 'insere')
-      if(command_input.length == 6)
-        insere(command_input[1], command_input[2], command_input[3], command_input[4], command_input[5])
-      else
-        insere(command_input[1], command_input[2], command_input[3], command_input[4], false)
-      end
-    end
-  
-    if command_input.length == 3 && (command_input[0] == 'exclui')
-      exclui(command_input[1], command_input[2])
-    end
+def atribuicao(table)
+  puts "Deseja atribuir o(a) #{table} quem ? "
+  id = gets.chomp.split(' ')
+
+  case table
+  when 'movie'
+    users.id = id
+    user.save
   end
 end
 
-main()
+def service(table)
+  case table
+  when 'users'
+    UserService.new
+
+  when 'tags'
+    TagService.new
+
+  when 'movies'
+    MovieService.new
+
+  when 'rating'
+    RatingService.new
+
+  end
+end
+
+def main
+  while Kernel # loop
+    command_input = gets.chomp.split(' ')
+    puts command_input.length
+
+    command = command_input[0]
+    table = command_input[1]
+    service = service(command_input[1])
+
+    service.lista if command == 'lista'
+
+    insere(table, command_input) if command == 'insere'
+    # infos = parse_inserir(command_input[2], command_input[3], false) if table == 'movies'
+    # infos = parse_inserir(command_input[2], command_input[3], command_input[4]) if table == 'tags'
+    # infos = parse_inserir(command_input[2], command_input[3], command_input[4]) if table == 'rating'
+
+    # inserir(infos[0], infos[1], infos[2])
+    #   atribuicao(command_input[1])
+
+  end
+end
+
+main

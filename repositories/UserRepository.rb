@@ -8,21 +8,20 @@ class UserRepository
     db.users_table
   end
 
-  def insere(first_name, last_name, email, id)
+  def insere(first_name, last_name, email)
     user = User.new({
                       first_name: first_name,
                       last_name: last_name,
-                      email: email,
+                      email: email
                     })
 
-    movie.id = id
     user.save
   end
 
   def lista
     user = User.all
     user.each do |p|
-      puts "#{p.first_name} || #{p.last_name} || #{p.email}"
+      puts "#{p.id} || #{p.first_name} || #{p.last_name} || #{p.email}"
     end
   end
 
