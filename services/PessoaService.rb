@@ -48,12 +48,13 @@ class PessoaService
   end
 
   def altera(condicao, velho, novo)
-    puts condicao, velho, novo
     pessoa = Pessoa.find_by_name(velho)
     case condicao
     when 'name'
       pessoa.name = novo
       pessoa.save
+
+      puts "Alteração com sucesso!"
     end
   end
 end

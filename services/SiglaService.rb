@@ -44,12 +44,13 @@ class SiglaService
   end
 
   def altera(condicao, velho, novo)
-    puts condicao, velho, novo
     sigla = Sigla.find_by_name(velho)
     case condicao
     when 'name'
       sigla.name = novo
       sigla.save
+
+      puts "Alteração com sucesso!"
     end
   end
 end

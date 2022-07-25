@@ -4,9 +4,8 @@ Trabalho2 de Web
 
 NOTA1: Quando for necessário o uso de espaços, deve ser utilizado o _
 NOTA2: 
-    Existe um script chamado popula.rb na raiz do projeto que cria 15 registros de chada
-    tabela sem nenhuma associação. Para quando for inserir o próximo registro em qualquer tabela
-    poder criar a associação desse novo registro sem nenhum problema.
+    Existe um script chamado popula.rb na raiz do projeto que cria 15 registros de cada
+    tabela com associações de forma aleatória.
 
 versão do ruby utilizada:
     ruby 3.1.2p20
@@ -45,8 +44,11 @@ Explicando as relações:
     1 Estado para 1 Sigla
     N Cidades para N Pessoas
 
+
 Fluxo de execução:
-    1 - Deve utilizar algum dos comandos listados acima.
-    2 - Verificar com [y/n] se deseja atribuir a tabela a alguma outra.
-    3 - Digitar o id da associação ou um array de id's se for muitos para muitos
-    4 - Confirmação de operação bem sucedida. Volta ao passo 1.
+    Executar:
+        -> ruby main.rb
+            1 - Deve utilizar algum dos comandos listados acima.
+            2 - Verificar com [y/n] se deseja atribuir a tabela a alguma outra.
+            3 - Digitar o id da associação ou um array de id's se for muitos para muitos
+            4 - Confirmação de operação bem sucedida. Volta ao passo 1.

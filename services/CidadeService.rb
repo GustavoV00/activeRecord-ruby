@@ -47,12 +47,13 @@ class CidadeService
   end
 
   def altera(condicao, velho, novo)
-    puts condicao, velho, novo
     cidade = Cidade.find_by_name(velho)
     case condicao
     when 'name'
       cidade.name = novo
       cidade.save
+
+      puts "Alteração com sucesso!"
     end
   end
 end
