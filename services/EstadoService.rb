@@ -8,14 +8,14 @@ class EstadoService
   end
 
   def insere(name)
-    puts "ESTOU ISNERINDO ALGO AQUI"
     if name
       estado = Estado.new
       estado.name = name
       estado.save
     else
-      puts "Nome não fornecido!"
+      puts "Name não fornecido!"
     end
+
   end
 
   def lista(flag)
@@ -36,10 +36,10 @@ class EstadoService
       end
       puts
     end
+
   end
 
   def exclui(condition, value)
-    puts "SELECT * from estados WHERE #{condition} = '#{value}'"
     case condition
     when 'id'
       Estado.where(id: value).destroy_all
@@ -48,4 +48,13 @@ class EstadoService
     end
   end
 
+  def altera(condicao, velho, novo)
+    puts condicao, velho, novo
+    estado = Estado.find_by_name(velho)
+    case condicao
+    when 'name'
+      estado.name = novo
+      estado.save
+    end
+  end
 end

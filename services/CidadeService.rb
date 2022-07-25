@@ -10,8 +10,6 @@ class CidadeService
   end
 
   def insere(name, estado_id)
-    puts "ESTOU INSERINDO ALGO AQUI CARAIO "
-    # TODO: Arrumar o inserir livro_id que é um array agoira
     if name
       estado = Estado.find_by_id(estado_id)
 
@@ -23,7 +21,7 @@ class CidadeService
   end
 
   def lista
-    puts "ID || AUTOR_NAME || ESTADO_ID || ESTADO_NAME || PESSOAS"
+    puts "ID || CIDADE_NAME || ESTADO_ID || ESTADO_NAME || PESSOAS_NAMES"
     Cidade.find_each do |a|
       if a.estado_id
         print "#{a.id} || #{a.name} || #{a.estado_id} || #{a.estado.name} || "
@@ -34,7 +32,27 @@ class CidadeService
       pessoas.each do |pessoa|
         print "#{pessoa.name} - "
       end
+
       puts
+    end
+  end
+
+  def exclui(condition, value)
+    case condition
+    when 'id'
+      Cidade.where(id: value).destroy_all
+    when 'name'
+      Cidade.where(name: value).destroy_all
+    end
+  end
+
+  def altera(condicao, velho, novo)
+    puts condicao, velho, novo
+    cidade = Cidade.find_by_name(velho)
+    case condicao
+    when 'name'
+      cidade.name = novo
+      cidade.save
     end
   end
 end

@@ -60,10 +60,10 @@ def exclui(table, args, service)
 end
 
 def altera(table, args, service)
-  puts args
+  # puts args
   velho = args[2].split('"')
   novo = args[3].split('"')
-  print "VELHO: ", velho[1], " NOVO: ", novo[1], "\n"
+  # print "VELHO: ", velho[1], " NOVO: ", novo[1], "\n"
   if velho[0] == novo[0]
     condition = velho[0]
     condition.delete! '='
@@ -91,6 +91,7 @@ end
 
 def main
   while Kernel # loop
+    puts "Digite algum comando: "
     command_input = gets.chomp.split(' ')
     # puts command_input.length
 
@@ -170,6 +171,8 @@ def main
     if command == "altera" && service
       altera(table, command_input, service)
     end
+  
+    puts "\n\n"
   end
 end
 

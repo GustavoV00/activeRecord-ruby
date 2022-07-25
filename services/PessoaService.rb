@@ -9,17 +9,19 @@ class PessoaService
   end
 
   def insere(name, cidades_ids)
-    puts "ESTOU INSERINDO ALGO AQUI CARAIO"
     if name
       pessoa = Pessoa.new
       pessoa.name = name
 
-      cidades_ids.each do |cidade_id|
-        cidade = Cidade.find_by_id(cidade_id)
-        pessoa.cidades << cidade
+      if cidades_ids != -1
+        cidades_ids.each do |cidade_id|
+          cidade = Cidade.find_by_id(cidade_id)
+          pessoa.cidades << cidade
+        end
       end
       pessoa.save
-
+    else
+      puts "Name não fornecido"
     end
   end
 
@@ -33,15 +35,15 @@ class PessoaService
       end
       puts
     end
+
   end
 
   def exclui(condition, value)
-    puts "SELECT * from estados WHERE #{condition} = '#{value}'"
     case condition
     when 'id'
-      Estado.where(id: value).destroy_all
+      Pessoa.where(id: value).destroy_all
     when 'name'
-      Estado.where(name: value).destroy_all
+      Pessoa.where(name: value).destroy_all
     end
   end
 

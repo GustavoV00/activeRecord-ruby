@@ -8,7 +8,6 @@ class SiglaService
   end
 
   def insere(name, estado_id)
-    puts "ESTOU INSERINDO ALGO AQUI CARAIO"
     if name
       if estado_id != -1
         estado = Estado.find_by_id(estado_id)
@@ -30,8 +29,27 @@ class SiglaService
       if a.estado_id
         puts "#{a.id} || #{a.name} || #{a.estado_id} || #{a.estado.name}"
       else
-        puts "#{a.id} || #{a.name}"
+        puts "#{a.id} || #{a.name} || ||"
       end
+    end
+  end
+
+  def exclui(condition, value)
+    case condition
+    when 'id'
+      Sigla.where(id: value).destroy_all
+    when 'name'
+      Sigla.where(name: value).destroy_all
+    end
+  end
+
+  def altera(condicao, velho, novo)
+    puts condicao, velho, novo
+    sigla = Sigla.find_by_name(velho)
+    case condicao
+    when 'name'
+      sigla.name = novo
+      sigla.save
     end
   end
 end
