@@ -1,5 +1,4 @@
 Gustavo Valente Nunes
-GRR: 20182557
 Trabalho2 de Web
 
 NOTA1:
